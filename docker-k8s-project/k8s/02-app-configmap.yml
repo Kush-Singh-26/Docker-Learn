@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  # Environment variables for our FastAPI app
+  REDIS_HOST: "redis-service"  # This will be the name of our Redis Service
+  GREETING: "Welcome to Kubernetes"

@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  # The FastAPI Backend
+  backend:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+    volumes:
+      - ./app:/usr/src/app # Mount local code for live-reloading
+
+  # The Redis Database
+  redis:
+    image: "redis:alpine"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:

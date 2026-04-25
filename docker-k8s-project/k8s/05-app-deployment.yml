@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  replicas: 2  # Let's start with 2 copies of our app
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: hit-counter:latest # The image we loaded into kind
+        imagePullPolicy: Never    # Tell K8s: "Do not pull, use local"
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: app-config # Load all keys from our ConfigMap as Env Vars
